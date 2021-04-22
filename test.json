@@ -1,0 +1,22 @@
+{
+  "meals": {
+    "1": {
+      "name": "meal1 bla bla",
+      "difficulty": 3,
+      "count": 20,
+      "last_date": "2021-04-21"
+    },
+    "2": {
+      "name": "meal2-bl\u00fc_bl\u00d6",
+      "difficulty": 2,
+      "count": 1,
+      "last_date": "2021-10-12"
+    },
+    "3": {
+      "name": "string",
+      "difficulty": 0,
+      "count": 0,
+      "last_date": "2021-04-22"
+    }
+  }
+}

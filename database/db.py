@@ -1,4 +1,5 @@
 from tinydb import TinyDB
+from schemas.meal import Meal
 
 
 class DB(object):
@@ -9,8 +10,8 @@ class DB(object):
         TinyDB.default_table_name = self.MEAL_TABLE_NAME
         self.db = TinyDB(path)
 
-    def add_meal(self, meal):
-        self.db.insert(meal)
+    def add_meal(self, meal: Meal):
+        self.db.insert(meal.as_dict())
 
     def get_all_meals(self):
         return self.db.all()
