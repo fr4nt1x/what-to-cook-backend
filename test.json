@@ -2,21 +2,40 @@
   "meals": {
     "1": {
       "name": "meal1 bla bla",
-      "difficulty": 3,
+      "tags": [],
       "count": 20,
       "last_date": "2021-04-21"
     },
     "2": {
       "name": "meal2-bl\u00fc_bl\u00d6",
-      "difficulty": 2,
+      "tags": [],
       "count": 1,
       "last_date": "2021-10-12"
     },
     "3": {
       "name": "string",
-      "difficulty": 0,
+      "tags": [
+        "easy",
+        "medium"
+      ],
       "count": 0,
       "last_date": "2021-04-22"
+    },
+    "4": {
+      "name": "string4",
+      "tags": [
+        "easy"
+      ],
+      "count": 0,
+      "last_date": "2021-05-4"
+    },
+    "5": {
+      "name": "meal5",
+      "tags": [
+        "easy"
+      ],
+      "count": 20,
+      "last_date": "2021-04-21"
     }
   }
 }
