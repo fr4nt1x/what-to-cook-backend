@@ -32,7 +32,7 @@
     "5": {
       "name": "meal5",
       "tags": [
-        "easy"
+        "easy", "hard"
       ],
       "count": 20,
       "last_date": "2021-04-21"
