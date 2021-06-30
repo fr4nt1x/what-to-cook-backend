@@ -16,6 +16,11 @@ class DB(object):
     def add_meal(self, meal: Meal):
         self.db.insert(meal.as_dict())
 
+    def update_dates_for_meal(self, meal: Meal):
+        meal_query = Query()
+        self.db.update({"last_dates": list(set([d.isoformat() for d in sorted(meal.last_dates)]))},
+                       meal_query.name == meal.name)
+
     def get_all_meals(self):
         return self.db.all()
 
@@ -24,4 +29,5 @@ class DB(object):
         self.db.update({"tags": meal.tags}, meal_query.name == meal.name)
 
     def close(self):
+        print("close")
         self.db.close()

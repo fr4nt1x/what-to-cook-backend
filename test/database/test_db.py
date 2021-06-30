@@ -24,10 +24,11 @@ class TestDB:
         path = os.path.join(tmpdir, "db.json")
         db = DB(path)
         last_meal_date = datetime.date.today().isoformat()
-        meal1 = {"name": "meal1 bla bla", "tags": ["easy"], "count": 20, "last_date": last_meal_date}
+        last_meal_date2 = datetime.date(2021, 10, 12).isoformat()
+        meal1 = {"name": "meal1 bla bla", "tags": ["easy"], "count": 20, "last_dates": [last_meal_date]}
         db.add_meal(Meal.from_dict(meal1))
-        last_meal_date = datetime.date(2021, 10, 12).isoformat()
-        meal2 = {"name": "meal2-blü_blÖ", "tags": ["easy", "medium"], "count": 1, "last_date": last_meal_date}
+        meal2 = {"name": "meal2-blü_blÖ", "tags": ["easy", "medium"], "count": 1,
+                 "last_dates": [last_meal_date, last_meal_date2]}
         db.add_meal(Meal.from_dict(meal2))
         all_meals = db.get_all_meals()
         assert [meal1, meal2] == all_meals
@@ -36,10 +37,10 @@ class TestDB:
         path = os.path.join(tmpdir, "db.json")
         db = DB(path)
         last_meal_date = datetime.date.today().isoformat()
-        meal1 = {"name": "meal1 bla bla", "tags": ["easy"], "count": 20, "last_date": last_meal_date}
+        meal1 = {"name": "meal1 bla bla", "tags": ["easy"], "count": 20, "last_dates": [last_meal_date]}
         db.add_meal(Meal.from_dict(meal1))
         last_meal_date = datetime.date(2021, 10, 12).isoformat()
-        meal2 = {"name": "meal2-blü_blÖ", "tags": ["easy", "medium"], "count": 1, "last_date": last_meal_date}
+        meal2 = {"name": "meal2-blü_blÖ", "tags": ["easy", "medium"], "count": 1, "last_dates": [last_meal_date]}
         db.add_meal(Meal.from_dict(meal2))
         tags = ["new"]
         meal2['tags'] = tags
@@ -49,14 +50,17 @@ class TestDB:
 
     """Not a test. For database creation"""
 
-    def create_many_meals(self, tmpdir):
+    def test_many_meals(self, tmpdir):
         db = DB("db.json")
         possible_tags = ["Tag_{}".format(i) for i in range(1, 10)]
+
         for i in range(1, 500):
-            last_meal_date = self.get_random_date()
+            possible_dates = [self.get_random_date() for i in range(1, 10)]
             j = randint(0, 4)
+            number_of_dates = randint(0, 5)
+            last_dates = sorted(list(set(sample(possible_dates, k=number_of_dates))))
             tags = sample(possible_tags, k=j)
-            meal = {"name": "Meal{}".format(i), "tags": tags, "count": 0, "last_date": last_meal_date}
+            meal = {"name": "Meal{}".format(i), "tags": tags, "count": 0, "last_dates": last_dates}
             db.add_meal(Meal.from_dict(meal))
         db.close()
         print(db.get_all_meals())
