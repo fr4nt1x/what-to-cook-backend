@@ -17,7 +17,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-db = DB('test_big.json')
+db = DB('test.json')
 
 
 @app.on_event("shutdown")
@@ -38,3 +38,8 @@ def add_meal(meal: Meal):
 @app.post("/change_tags_for_meal")
 def change_tags_for_meal(meal: Meal):
     return db.change_tags_for_meal(meal)
+
+
+@app.post("/update_dates_for_meal")
+def update_dates_for_meal(meal: Meal):
+    return db.update_dates_for_meal(meal)
