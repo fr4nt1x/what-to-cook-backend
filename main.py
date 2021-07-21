@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi import Response, status
 from fastapi.middleware.cors import CORSMiddleware
 
 from database.db import DB
@@ -31,15 +32,28 @@ def read_all_meals():
 
 
 @app.post("/add_meal")
-def add_meal(meal: Meal):
-    return db.add_meal(meal)
+def add_meal(meal: Meal, response: Response):
+    if not db.add_meal(meal):
+        response.status_code = status.HTTP_400_BAD_REQUEST
 
 
 @app.post("/change_tags_for_meal")
-def change_tags_for_meal(meal: Meal):
-    return db.change_tags_for_meal(meal)
+def change_tags_for_meal(meal: Meal, response: Response):
+    if not db.change_tags_for_meal(meal):
+        response.status_code = status.HTTP_400_BAD_REQUEST
+    return
+
+
+@app.post("/remove_date_from_meal")
+def remove_date_from_meal(body: list, response: Response):
+    print(body)
+    if not db.remove_date_from_meal(Meal.from_dict(body[0]), body[1]):
+        response.status_code = status.HTTP_400_BAD_REQUEST
+    return
 
 
 @app.post("/update_dates_for_meal")
-def update_dates_for_meal(meal: Meal):
-    return db.update_dates_for_meal(meal)
+def update_dates_for_meal(meal: Meal, response: Response):
+    if not db.update_dates_for_meal(meal):
+        response.status_code = status.HTTP_400_BAD_REQUEST
+    return

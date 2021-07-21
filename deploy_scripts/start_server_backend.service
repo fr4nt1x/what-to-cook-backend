@@ -1,0 +1,15 @@
+[Unit]
+Description=MealServerBackend
+After=network.target
+
+[Service]
+ExecStart=<path>/start_backend.sh
+WorkingDirectory=<path>
+StandardOutput=inherit
+StandardError=inherit
+KillSignal=SIGINT
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
