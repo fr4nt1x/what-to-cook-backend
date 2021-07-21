@@ -48,9 +48,24 @@ class TestDB:
         all_meals = db.get_all_meals()
         assert all_meals[1]["tags"] == tags
 
+    def test_remove_date_from_meal(self, tmpdir):
+        path = os.path.join(tmpdir, "db.json")
+        db = DB(path)
+        last_meal_date = datetime.date.today().isoformat()
+        second_meal_date = last_meal_date
+        meal1 = {"name": "meal1 bla bla", "tags": ["easy"], "count": 20, "last_dates": [last_meal_date]}
+        db.add_meal(Meal.from_dict(meal1))
+        last_meal_date = datetime.date(2021, 10, 12).isoformat()
+        meal2 = {"name": "meal2-blü_blÖ", "tags": ["easy", "medium"], "count": 1,
+                 "last_dates": [second_meal_date, last_meal_date]}
+        db.add_meal(Meal.from_dict(meal2))
+        db.remove_date_from_meal(Meal.from_dict(meal2), second_meal_date)
+        all_meals = db.get_all_meals()
+        assert all_meals[1]["last_dates"] == [last_meal_date]
+
     """Not a test. For database creation"""
 
-    def test_many_meals(self, tmpdir):
+    def many_meals(self, tmpdir):
         db = DB("db.json")
         possible_tags = ["Tag_{}".format(i) for i in range(1, 10)]
 
