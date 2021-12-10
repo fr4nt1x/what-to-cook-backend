@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 from fastapi import Response, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,6 +19,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+images_path = "C:\\Users\\Fr4nt1x\\Documents\\Code\\personal-dashboard\\public\\images"
 
 db = DB('test.json')
 
@@ -57,3 +61,17 @@ def update_dates_for_meal(meal: Meal, response: Response):
     if not db.update_dates_for_meal(meal):
         response.status_code = status.HTTP_400_BAD_REQUEST
     return
+
+
+@app.get("/all_static_images")
+def all_static_images():
+    files = os.listdir(images_path)
+    file_endings = [".jpg", ".svg", ".png"]
+    images = []
+    for f in files:
+        if os.path.isfile(os.path.join(images_path, f)):
+            for ending in file_endings:
+                if f.endswith(ending):
+                    images.append(f)
+
+    return {"images": images}
