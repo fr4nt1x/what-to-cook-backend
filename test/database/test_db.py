@@ -28,7 +28,7 @@ class TestDB:
         meal1 = {"name": "meal1 bla bla", "tags": ["easy"], "count": 20, "last_dates": [last_meal_date]}
         db.add_meal(Meal.from_dict(meal1))
         meal2 = {"name": "meal2-blü_blÖ", "tags": ["easy", "medium"], "count": 1,
-                 "last_dates": [last_meal_date, last_meal_date2]}
+                 "last_dates": sorted([last_meal_date, last_meal_date2])}
         db.add_meal(Meal.from_dict(meal2))
         all_meals = db.get_all_meals()
         assert [meal1, meal2] == all_meals
